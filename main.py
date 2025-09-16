@@ -1,4 +1,4 @@
-from etl.extract import extract_pdf
+from etl.extract import extract_pdf, DATA_DIR
 
 
 def run_ingestion():
@@ -16,8 +16,13 @@ def start_server(mode):
     return
 # start_server("api")
 
-files = [r"pdf-insight-engine\data\cocacola2025.pdf", r"pdf-insight-engine\data\ford2024.pdf", r"pdf-insight-engine\data\goog2024.pdf"]
-text = extract_pdf(files)
+files = [
+    "cocacola2025.pdf",
+    "ford2024.pdf",
+    "goog2024.pdf"
+]
+
+text = extract_pdf([DATA_DIR / f for f in files])
 # print(text)
 for filename, content in text.items():
     print(f"--- {filename} --- {len(content)} characters extracted ---")
