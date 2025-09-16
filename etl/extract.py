@@ -1,16 +1,31 @@
 import pymupdf
+import pandas as pd
 
 # Ingest the data -- this is currently ingest.py in the tut i am following
-def extract_pdf(pdf_path):
+
+
+def extract_pdf(pdf_paths):
     """
-    Extract raw text frin a PDF file.
+    Extract raw text from a PDF file. pdf_paths should be a pd.Series
+    type of Strings. Returns a pd.Series object.
+
+    texts = the entire text for one file
     """
     try:
-        doc = pymupdf.open(pdf_path)
-        text = "".join(page.get_text() for page in doc)
-        doc.close()
-        return text
+        if isinstance(pdf_paths, str):
+            return extract_helper(pdf_paths)
+        if isinstance(pdf_paths, list):
+            texts = {path: extract_helper(path) for path in pdf_paths}
+            print(texts.keys()) # make keys more easily indexable (splice filename from end)
+            return texts
     except FileNotFoundError:
-        raise FileNotFoundError(f"PDF file not found: {pdf_path}")
+        raise FileNotFoundError(f"PDF file not found: {pdf_paths}")
     except Exception as e:
-        raise Exception(f"Error processing PDF {pdf_path}: {str(e)}")
+        raise Exception(f"Error processing PDF {pdf_paths}: {str(e)}")
+
+
+def extract_helper(pdf_path):
+    doc = pymupdf.open(pdf_path)
+    text = "".join(page.get_text() for page in doc)
+    doc.close()
+    return text

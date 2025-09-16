@@ -16,4 +16,10 @@ def start_server(mode):
     return
 # start_server("api")
 
-text = extract_pdf("pdf-insight-engine\\data\\goog2024.pdf")
+files = ["pdf-insight-engine\\data\\cocacola2025.pdf", "pdf-insight-engine\\data\\ford2024.pdf", "pdf-insight-engine\\data\\goog2024.pdf"]
+text = extract_pdf(files)
+# print(text)
+for filename, content in text.items():
+    print(f"--- {filename} --- {len(content)} characters extracted ---")
+    print(content[:1])  # Show the first 400 characters
+    print("...\n")
