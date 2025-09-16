@@ -1,6 +1,6 @@
 import pymupdf
 import pandas as pd
-import re
+from pathlib import Path
 
 # Ingest the data -- this is currently ingest.py in the tut i am following
 
@@ -16,12 +16,7 @@ def extract_pdf(pdf_paths):
         if isinstance(pdf_paths, str):
             return extract_helper(pdf_paths)
         if isinstance(pdf_paths, list):
-            for path in pdf_paths:
-                match = re.search(r"((?<=\\)\w*.pdf)", path)
-                if match:
-                    print("Captured: ", match.group(1))
-                else: print("No match:", path)
-            texts = {path: extract_helper(path) for path in pdf_paths}
+            texts = {Path(path).stem: extract_helper(path) for path in pdf_paths}
             print(texts.keys()) # make keys more easily indexable (splice filename from end)
             return texts
     except FileNotFoundError:

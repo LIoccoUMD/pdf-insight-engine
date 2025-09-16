@@ -16,7 +16,7 @@ def start_server(mode):
     return
 # start_server("api")
 
-files = ["pdf-insight-engine\\data\\cocacola2025.pdf", "pdf-insight-engine\\data\\ford2024.pdf", "pdf-insight-engine\\data\\goog2024.pdf"]
+files = [r"pdf-insight-engine\data\cocacola2025.pdf", r"pdf-insight-engine\data\ford2024.pdf", r"pdf-insight-engine\data\goog2024.pdf"]
 text = extract_pdf(files)
 # print(text)
 for filename, content in text.items():
